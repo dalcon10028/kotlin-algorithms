@@ -1,5 +1,8 @@
+package programmers
+
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import 달리기_경주
 
 class 달리기_경주_테스트 {
     @Test
