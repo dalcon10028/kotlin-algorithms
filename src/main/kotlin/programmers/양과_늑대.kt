@@ -1,26 +1,27 @@
 class 양과_늑대 {
     fun solution(info: IntArray, edges: Array<IntArray>): Int {
-        val answers: MutableList<Int> = mutableListOf()
+        var answer = 0
         val visited = BooleanArray(info.size)
 
-        fun dfs (sheep: Int, wolf: Int) {
+        fun backTrack(sheep: Int, wolf: Int) {
             if (sheep <= wolf) return
-            answers.add(sheep)
+            answer = answer.coerceAtLeast(sheep)
 
-            for (edge: IntArray in edges) {
-                val (p: Int, c: Int) = edge
-                if (visited[p] && !visited[c]) {
-                    visited[c] = true
-                    if (info[c] == 0) dfs(sheep + 1, wolf)
-                    else dfs(sheep, wolf + 1)
-                    visited[c] = false
+            edges.forEach { edge ->
+                val (from, to) = edge
+                if (visited[from] && !visited[to]) {
+                    visited[to] = true
+                    if (info[to] == 0) backTrack(sheep + 1, wolf)
+                    else backTrack(sheep, wolf + 1)
+                    visited[to] = false
                 }
             }
 
         }
-        visited[0] = true
-        dfs(1, 0)
 
-        return answers.max()
+        visited[0] = true
+        backTrack(1, 0)
+
+        return answer
     }
 }
